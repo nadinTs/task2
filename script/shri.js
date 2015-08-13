@@ -44,15 +44,11 @@ function getData(url, callback) {
 /**
  * Ваши изменения ниже
  */
-//(function(request){
-//    ...
-//})(requests[i]);
+
 var requests = ['/countries', '/cities', '/populations'];
 var responses = {};
 
-//for (i = 0; i < 3; i++) {
 requests.forEach(function(request){
-    //var request = requests[i];
     var callback = function (error, result) {
         responses[request] = result;
         var l = [];
