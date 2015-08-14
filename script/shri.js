@@ -7,7 +7,7 @@ function getData(url, callback) {
     var RESPONSES = {
         '/countries': [
             {name: 'Cameroon', continent: 'Africa'},
-            {name :'Fiji Islands', continent: 'Oceania'},
+            {name: 'Fiji Islands', continent: 'Oceania'},
             {name: 'Guatemala', continent: 'North America'},
             {name: 'Japan', continent: 'Asia'},
             {name: 'Yugoslavia', continent: 'Europe'},
@@ -48,7 +48,7 @@ function getData(url, callback) {
 var requests = ['/countries', '/cities', '/populations'];
 var responses = {};
 
-requests.forEach(function(request){
+requests.forEach(function (request) {
     var callback = function (error, result) {
         responses[request] = result;
         var l = [];
@@ -81,23 +81,46 @@ requests.forEach(function(request){
 
             console.log('Total population in African cities: ' + p);
 
-            var  citys = prompt("Введите город (Bamenda, Suva, Quetzaltenango, Osaka, Subotica, Zanzibar)", '');
-            var pop;
+            var user_input = prompt("Введите город или страну ", '');
+            var found_city =[];
             var found = false;
             for (i = 0; i < responses['/populations'].length; i++) {
-                if (responses['/populations'][i].name === citys) {
-                    alert (responses['/populations'][i].count);
+                if (responses['/populations'][i].name === user_input) {
+                    alert("Численность населения " + user_input + " равна " + responses['/populations'][i].count + ' человек');
                     found = true;
                     break;
                 }
             }
-                if (found === false) {
+
+            if (found === false) {
+                for (i = 0; i < responses['/cities'].length; i++) {
+                    if (responses['/cities'][i].country === user_input) {
+                        found_city.push(responses['/cities'][i].name);
+                        console.log(responses['/cities'][i].name);
+                    }
+                }
+                var pop = 0;
+                for (i = 0; i < responses['/populations'].length; i++) {
+                    for (j = 0; j < found_city.length; j++) {
+
+                        if (responses['/populations'][i].name === found_city[j]) {
+                            pop += responses['/populations'][i].count;
+                        }
+                    }
+                }
+                if (pop > 0) {
+                    alert("Численность населения " + user_input + " равна " + pop + " человек");
+                }
+                else {
                     alert ('не найдено');
                 }
 
+            }
+
         }
     };
-    getData(request, callback);
+
+getData(request, callback);
 
 
 });
