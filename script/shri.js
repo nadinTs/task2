@@ -80,9 +80,25 @@ requests.forEach(function(request){
             }
 
             console.log('Total population in African cities: ' + p);
+
+            var  citys = prompt("Введите город (Bamenda, Suva, Quetzaltenango, Osaka, Subotica, Zanzibar)", '');
+            var pop;
+            var found = false;
+            for (i = 0; i < responses['/populations'].length; i++) {
+                if (responses['/populations'][i].name === citys) {
+                    alert (responses['/populations'][i].count);
+                    found = true;
+                    break;
+                }
+            }
+                if (found === false) {
+                    alert ('не найдено');
+                }
+
         }
     };
     getData(request, callback);
 
-})
+
+});
 
